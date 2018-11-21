@@ -6,9 +6,9 @@ The Vue client for my pointing poker application. Check out the server for this 
 
 This project is still under development. The main things to be accomplished for a confident release are...
 
-1. Display votes from other clients when joining a session (see [Issue #1](https://github.com/NathanHeffley/pointer-server/issues/1))
+1. Display votes from other clients when joining a session (see [Issue #1](https://github.com/NathanHeffley/pointer-frontend/issues/1))
 
-2. Set up better `.env` files (see [Issue #2](https://github.com/NathanHeffley/pointer-server/issues/2))
+2. Set up better `.env` files (see [Issue #2](https://github.com/NathanHeffley/pointer-frontend/issues/2))
 
 3. Add tests
 
