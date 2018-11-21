@@ -38,8 +38,8 @@ export default {
   name: 'LoginPage',
   data () {
     return {
-      session: '',
-      name: ''
+      session: null,
+      name: null
     }
   }
 }
