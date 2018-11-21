@@ -1,5 +1,5 @@
-import UserItem from '@/components/UserItem'
 import { shallowMount } from '@vue/test-utils'
+import UserItem from '@/components/UserItem'
 
 describe('UserItem.vue', () => {
   const wrapper = shallowMount(UserItem, {
@@ -22,10 +22,11 @@ describe('UserItem.vue', () => {
   it('should render check mark with a vote', () => {
     wrapper.setProps({
       user: {
-        username: 'John Doe',
+        username: 'Jane Doe',
         vote: 3
       }
     })
+    expect(wrapper.find('span').text()).toBe('Jane Doe')
     expect(wrapper.find('img').attributes('src')).toContain('check')
   })
 })
