@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  props: ['user', 'self'],
+  props: ['user'],
   computed: {
     icon: function () {
       if (this.$props.user.vote) {
