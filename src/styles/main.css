@@ -1,0 +1,55 @@
+@tailwind preflight;
+
+@tailwind components;
+
+.login-input {
+  @apply bg-grey-lighter appearance-none border-2 border-grey-lighter rounded w-full py-2 px-4 text-grey-darker leading-tight
+}
+.login-input:focus {
+  @apply bg-white;
+}
+
+.opacity-60 {
+  opacity: .6;
+}
+
+.btn {
+  @apply font-bold py-2 px-4 rounded;
+}
+
+.btn-blue {
+  @apply bg-blue text-white;
+}
+.btn-blue:hover {
+  @apply bg-blue-dark;
+}
+
+.btn-grey {
+  @apply bg-grey text-white;
+}
+
+.btn-grey:hover {
+  @apply bg-grey-dark;
+}
+
+.points {
+  @apply text-white text-center inline-block w-8 h-8 leading-tight rounded;
+}
+
+@tailwind utilities;
+
+.text-overflow-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.hover\:opacity-100:hover {
+  opacity: 100;
+}
+
+@media (min-width: 576px) {
+  .sm\:-ml-12 {
+    margin-left: -3rem;
+  }
+}
