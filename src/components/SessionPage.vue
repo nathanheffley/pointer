@@ -113,6 +113,11 @@ export default {
           vote: member.info.vote
         })
       }
+
+      this.channel.trigger('client-vote', {
+        userId: this.userId,
+        points: this.vote
+      })
     })
 
     channel.bind('pusher:member_removed', (member) => {
