@@ -24,7 +24,7 @@
         <div class="flex items-center">
           <div class="w-1/4"></div>
           <div class="w-3/4">
-            <router-link v-if="session && name" :to="{ name: 'SessionPage', params: { id: session, name } }" tag="button" class="btn btn-blue no-underline">Host</router-link>
+            <router-link v-if="(session.trim().length > 0) && (name.trim().length > 0)" :to="{ name: 'SessionPage', params: { id: session, name } }" tag="button" class="btn btn-blue no-underline">Host</router-link>
             <button v-else class="btn btn-blue hover:bg-blue opacity-50 cursor-not-allowed" disabled>Host</button>
           </div>
         </div>
