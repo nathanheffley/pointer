@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const glob = require('glob-all')
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
@@ -8,7 +9,14 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const PurgeCSSPlugin = require('purgecss-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+
+class TailwindExtractor {
+  static extract(content) {
+    return content.match(/[A-Za-z0-9-_:\/]+/g) || [];
+  }
+}
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -48,6 +56,20 @@ const webpackConfig = merge(baseWebpackConfig, {
       // codesplit chunks into this main css file as well.
       // This will result in *all* of your app's CSS being loaded upfront.
       allChunks: false,
+    }),
+    // Remove any CSS classes that aren't used in the actual application,
+    // very important because of all the extra classes we aren't using in Tailwind.
+    new PurgeCSSPlugin({
+      paths: glob.sync([
+        path.join(__dirname, '../index.html'),
+        path.join(__dirname, '../src/components/*.vue')
+      ]),
+      extractors: [
+        {
+          extractor: TailwindExtractor,
+          extensions: ["html","vue"]
+        }
+      ]
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
