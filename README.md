@@ -1,29 +1,23 @@
-# pointer-frontend
+# pointer
 
-The Vue client for my pointing poker application. Check out the server for this site over at [NathanHeffley/pointer-server](https://github.com/NathanHeffley/pointer-server).
+My open-source pointing poker application.
 
 ## Work In Progress
 
-This project is still under development. The main things to be accomplished for a confident release are...
-
-- [x] ~Display votes from other clients when joining a session (see [Issue #1](https://github.com/NathanHeffley/pointer-frontend/issues/1))~
-
-- [ ] Set up better `.env` files (see [Issue #2](https://github.com/NathanHeffley/pointer-frontend/issues/2))
-
-- [x] ~Add tests~
+This project is still under development. Check out the issues and projects to see if there's anything you're interested in helping out with!
 
 ## Getting Started
 
 ### Prerequisites
 
-Pointer uses [Pusher](https://pusher.com/), specifically their [presence channels], to handle communication between clients. This means you'll need to go to Pusher and create an application that you can use for this project.
+Pointer uses [Pusher](https://pusher.com/), specifically their [presence channels](https://pusher.com/docs/client_api_guide/client_presence_channels#presence-channels), to handle communication between clients. This means you'll need to go to Pusher and create an application that you can use for this project.
 
 ### Installing
 
 To get started, you'll need to clone the repo and install its dependencies. These examples will use [Yarn](https://yarnpkg.com/) since that is the maintained lock file, although npm should work just as well.
 
 ``` bash
-git clone https://github.com/NathanHeffley/pointer-frontend.git
+git clone https://github.com/NathanHeffley/pointer.git
 ```
 
 ``` bash
@@ -31,7 +25,7 @@ git clone https://github.com/NathanHeffley/pointer-frontend.git
 yarn
 ```
 
-Now that you have the code downloaded, you should edit the `dev.env.js` and `prod.env.js` files in `/config` to use your Pusher account's client key. Please be careful about not including the changes to these files in any PRs. A better solution for these values is in the works over on our [second issue](https://github.com/NathanHeffley/pointer-frontend/issues/2).
+Now that you have the code downloaded, you should copy the `.env.example` to create a `.env` file. Add your public Pusher key (not your secret) and change the default cluster if your app uses a different location.
 
 ### Running
 
