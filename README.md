@@ -27,19 +27,28 @@ yarn
 
 Now that you have the code downloaded, you should copy the `.env.example` to create a `.env` file. Add your public Pusher key (not your secret) and change the default cluster if your app uses a different location.
 
-### Running
+### Development
 
-There are several ways to run the server, either by running the hot reloading `dev` server or building the project and serving the `index.html` file it creates in `/dist`.
+To start the dev server, simply run the `dev` command.
 
 ``` bash
 # serve with hot reload at localhost:8080
 npm run dev
+```
 
-# build for production with minification
+You will also need to run the lambda function which will handle connecting the users to the Pusher channel. Start it by using the `netlify-lambda` command.
+
+``` bash
+# run the lambda function
+./node_modules/.bin/netlify-lambda serve src/functions
+```
+
+### Building
+
+To build the static files and lambda function, simply run the `build` command.
+
+``` bash
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
 ## Testing
