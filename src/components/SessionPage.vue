@@ -113,7 +113,7 @@ export default {
           userId: member.id,
           username: member.info.name,
           vote: member.info.vote,
-          pass: member.info.pass
+          pass: member.info.pass ? member.info.pass : false
         })
       }
 
@@ -200,7 +200,11 @@ export default {
       if (this.forceReveal) {
         return true
       }
-      return this.votes.filter(Boolean).length === (this.users.length + 1)
+      let votingUserCount = this.users.filter(user => user.pass === false).length
+      if (this.pass === false) {
+        votingUserCount += 1
+      }
+      return this.votes.filter(Boolean).length === votingUserCount
     },
     sessionUrl: function () {
       return `${process.env.FRONTEND_HOST}/s/${this.session}`
