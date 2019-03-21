@@ -22,7 +22,9 @@ export default {
         3: 0,
         5: 0,
         8: 0,
-        13: 0
+        13: 0,
+        20: 0,
+        '?': 0
       }
 
       this.votes.forEach(function (vote) {
@@ -43,6 +45,12 @@ export default {
       })
 
       finalResults.sort(function (a, b) {
+        if (a.votes === '?') {
+          return 1
+        }
+        if (b.votes === '?') {
+          return -1
+        }
         if (a.votes < b.votes) {
           return -1
         }
