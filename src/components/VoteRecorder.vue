@@ -10,7 +10,10 @@
       <li><button value="20" @click="recordVote(20)" :class="[ isVote(20) ? 'btn-blue' : 'btn-grey', 'btn text-xl w-16' ]">20</button></li>
       <li><button value="?" @click="recordVote('?')" :class="[ isVote('?') ? 'btn-blue' : 'btn-grey', 'btn text-xl w-16' ]">?</button></li>
     </ul>
-    <button @click="recordVote(null)" class="italic text-grey-dark mt-2">Clear your vote...</button>
+    <div class="flex justify-between mt-2 sm:max-w-xs">
+      <button @click="passVote()" class="italic text-blue-dark">Pass</button>
+      <button @click="recordVote(null)" class="italic text-grey-dark">Clear your vote...</button>
+    </div>
   </div>
 </template>
 
@@ -22,6 +25,10 @@ export default {
     isVote: function (points) {
       if (this.value === null) return true
       return points === this.value
+    },
+
+    passVote: function () {
+      this.$emit('pass')
     },
 
     recordVote: function (points) {

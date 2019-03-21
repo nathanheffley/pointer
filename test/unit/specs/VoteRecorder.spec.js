@@ -26,7 +26,8 @@ describe('VoteRecorder.vue', () => {
     expect(wrapper.findAll('button').at(7).text()).toContain('?')
     expect(wrapper.findAll('button').at(7).classes('btn-blue')).toBeTruthy()
 
-    expect(wrapper.findAll('button').at(8).text()).toContain('Clear your vote...')
+    expect(wrapper.findAll('button').at(8).text()).toContain('Pass')
+    expect(wrapper.findAll('button').at(9).text()).toContain('Clear your vote...')
   })
 
   it('should highlight the current vote', () => {
@@ -50,6 +51,7 @@ describe('VoteRecorder.vue', () => {
     const wrapper = shallowMount(VoteRecorder)
 
     wrapper.findAll('button').at(0).trigger('click')
+    expect(wrapper.emitted('pass')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([0])
   })
@@ -58,6 +60,7 @@ describe('VoteRecorder.vue', () => {
     const wrapper = shallowMount(VoteRecorder)
 
     wrapper.findAll('button').at(1).trigger('click')
+    expect(wrapper.emitted('pass')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([1])
   })
@@ -66,6 +69,7 @@ describe('VoteRecorder.vue', () => {
     const wrapper = shallowMount(VoteRecorder)
 
     wrapper.findAll('button').at(2).trigger('click')
+    expect(wrapper.emitted('pass')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([3])
   })
@@ -74,6 +78,7 @@ describe('VoteRecorder.vue', () => {
     const wrapper = shallowMount(VoteRecorder)
 
     wrapper.findAll('button').at(3).trigger('click')
+    expect(wrapper.emitted('pass')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([5])
   })
@@ -82,6 +87,7 @@ describe('VoteRecorder.vue', () => {
     const wrapper = shallowMount(VoteRecorder)
 
     wrapper.findAll('button').at(4).trigger('click')
+    expect(wrapper.emitted('pass')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([8])
   })
@@ -90,6 +96,7 @@ describe('VoteRecorder.vue', () => {
     const wrapper = shallowMount(VoteRecorder)
 
     wrapper.findAll('button').at(5).trigger('click')
+    expect(wrapper.emitted('pass')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([13])
   })
@@ -98,6 +105,7 @@ describe('VoteRecorder.vue', () => {
     const wrapper = shallowMount(VoteRecorder)
 
     wrapper.findAll('button').at(6).trigger('click')
+    expect(wrapper.emitted('pass')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([20])
   })
@@ -106,14 +114,23 @@ describe('VoteRecorder.vue', () => {
     const wrapper = shallowMount(VoteRecorder)
 
     wrapper.findAll('button').at(7).trigger('click')
+    expect(wrapper.emitted('pass')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual(['?'])
+  })
+
+  it('should allow the user to pass', () => {
+    const wrapper = shallowMount(VoteRecorder)
+
+    wrapper.findAll('button.italic').at(0).trigger('click')
+    expect(wrapper.emitted('pass').length).toBe(1)
+    expect(wrapper.emitted('input')).toBeUndefined()
   })
 
   it('should allow the user to clear their vote', () => {
     const wrapper = shallowMount(VoteRecorder)
 
-    wrapper.find('button.italic').trigger('click')
+    wrapper.findAll('button.italic').at(1).trigger('click')
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([null])
   })
