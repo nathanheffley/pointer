@@ -29,4 +29,16 @@ describe('UserItem.vue', () => {
     expect(wrapper.find('span').text()).toBe('Jane Doe')
     expect(wrapper.find('img').attributes('src')).toContain('check')
   })
+
+  it('should render arrow when vote passed', () => {
+    wrapper.setProps({
+      user: {
+        username: 'John Smith',
+        vote: null,
+        pass: true
+      }
+    })
+    expect(wrapper.find('span').text()).toBe('John Smith')
+    expect(wrapper.find('img').attributes('src')).toContain('arrow')
+  })
 })
