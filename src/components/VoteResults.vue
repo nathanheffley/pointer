@@ -45,12 +45,6 @@ export default {
       })
 
       finalResults.sort(function (a, b) {
-        if (a.votes === '?') {
-          return 1
-        }
-        if (b.votes === '?') {
-          return -1
-        }
         if (a.votes < b.votes) {
           return -1
         }
