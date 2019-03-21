@@ -10,11 +10,11 @@
 
     <main class="text-black">
       <div class="px-4 py-6 max-w-sm mx-auto">
-        <vote-recorder v-model="vote"></vote-recorder>
+        <vote-recorder v-model="vote" v-on:input="clearPass()" v-on:pass="passVote()"></vote-recorder>
 
         <div class="sm:flex sm:justify-between">
           <ul class="mt-4 pr-2 list-reset text-3xl overflow-hidden">
-            <user-item :user="{username, vote}" />
+            <user-item :user="{username, vote, pass}" />
             <user-item v-for="user in users" :key="user.userId" :user="user" />
           </ul>
 
@@ -54,6 +54,7 @@ export default {
       session: this.$route.params.id,
       userId: null,
       username: this.$props.name,
+      pass: false,
       vote: null,
       forceReveal: false,
       users: []
@@ -91,7 +92,8 @@ export default {
           this.users.push({
             userId: member.id,
             username: member.info.name,
-            vote: null
+            vote: null,
+            pass: false
           })
         }
       })
@@ -110,7 +112,8 @@ export default {
         this.users.push({
           userId: member.id,
           username: member.info.name,
-          vote: member.info.vote
+          vote: member.info.vote,
+          pass: member.info.pass
         })
       }
 
@@ -118,6 +121,13 @@ export default {
         this.channel.trigger('client-vote', {
           userId: this.userId,
           points: this.vote
+        })
+      }
+
+      if (this.pass !== false) {
+        this.channel.trigger('client-pass', {
+          userId: this.userId,
+          pass: this.pass
         })
       }
     })
@@ -134,6 +144,14 @@ export default {
       this.users.forEach(function (user) {
         if (user.userId === userId) {
           user.vote = points
+        }
+      })
+    })
+
+    channel.bind('client-pass', ({userId, pass}) => {
+      this.users.forEach(function (user) {
+        if (user.userId === userId) {
+          user.pass = pass
         }
       })
     })
@@ -156,6 +174,13 @@ export default {
       this.channel.trigger('client-vote', {
         userId: this.userId,
         points: value
+      })
+    },
+
+    pass: function (value) {
+      this.channel.trigger('client-pass', {
+        userId: this.userId,
+        pass: value
       })
     }
   },
@@ -186,10 +211,21 @@ export default {
     copyLink: function () {
       navigator.clipboard.writeText(this.sessionUrl)
     },
+
+    passVote: function () {
+      this.pass = true
+      this.vote = null
+    },
+
+    clearPass: function () {
+      this.pass = false
+    },
+
     revealVotes: function () {
       this.forceReveal = true
       this.channel.trigger('client-reveal-votes', {})
     },
+
     clearVotes: function () {
       this.vote = null
       this.users.forEach(function (user) {
