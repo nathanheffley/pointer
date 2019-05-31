@@ -19,11 +19,11 @@ export default {
     voteResults: function () {
       let results = {
         1: 0,
+        2: 0,
         3: 0,
         5: 0,
         8: 0,
         13: 0,
-        20: 0,
         '?': 0
       }
 
