@@ -204,7 +204,7 @@ export default {
       if (this.pass === false) {
         votingUserCount += 1
       }
-      return this.votes.filter(Boolean).length === votingUserCount
+      return this.votes.filter(vote => vote !== null).length === votingUserCount
     },
     sessionUrl: function () {
       return `${process.env.FRONTEND_HOST}/s/${this.session}`
