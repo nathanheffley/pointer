@@ -15,7 +15,8 @@ exports.handler = function(event, context, callback) {
   let presenceData = {
     user_id: query.socket_id,
     user_info: {
-      name: query.username
+      name: query.username,
+      vote: null
     }
   }
 
