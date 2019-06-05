@@ -21,8 +21,8 @@
           <div class="mt-6 text-grey-darkest">
             <vote-results :votes="votes" :show="showVotes"></vote-results>
 
-            <conditional-button :enabled="(votes.filter(Boolean).length > 0) && !showVotes" @click="revealVotes">Reveal</conditional-button>
-            <conditional-button :enabled="votes.filter(Boolean).length > 0" @click="clearVotes">Clear</conditional-button>
+            <conditional-button :enabled="(votes.filter(vote => vote !== null).length > 0) && !showVotes" @click="revealVotes">Reveal</conditional-button>
+            <conditional-button :enabled="votes.filter(vote => vote !== null).length > 0" @click="clearVotes">Clear</conditional-button>
           </div>
         </div>
       </div>
@@ -204,7 +204,7 @@ export default {
       if (this.pass === false) {
         votingUserCount += 1
       }
-      return this.votes.filter(Boolean).length === votingUserCount
+      return this.votes.filter(vote => vote !== null).length === votingUserCount
     },
     sessionUrl: function () {
       return `${process.env.FRONTEND_HOST}/s/${this.session}`
