@@ -14,7 +14,7 @@ export default {
         return '/static/arrow.svg'
       }
 
-      if (this.$props.user.vote) {
+      if (this.$props.user.vote !== null) {
         return '/static/check.svg'
       }
 
