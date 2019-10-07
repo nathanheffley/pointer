@@ -33,7 +33,7 @@ To start the dev server, simply run the `dev` command.
 
 ``` bash
 # serve with hot reload at localhost:8080
-npm run dev
+yarn dev
 ```
 
 You will also need to run the lambda function which will handle connecting the users to the Pusher channel. Start it by using the `netlify-lambda` command.
