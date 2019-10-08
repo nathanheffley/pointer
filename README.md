@@ -48,7 +48,7 @@ You will also need to run the lambda function which will handle connecting the u
 To build the static files and lambda function, simply run the `build` command.
 
 ``` bash
-npm run build
+yarn run build
 ```
 
 ## Testing
@@ -57,7 +57,7 @@ All new code for the project should be accompanied by reasonable tests. The only
 
 ``` bash
 # run tests
-npm test
+yarn test
 ```
 
 ## License
