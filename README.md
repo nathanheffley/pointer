@@ -39,7 +39,6 @@ yarn dev
 You will also need to run the lambda function which will handle connecting the users to the Pusher channel. Start it by using the `netlify-lambda` command.
 
 ``` bash
-# run the lambda function
 ./node_modules/.bin/netlify-lambda serve src/functions
 ```
 
@@ -48,7 +47,7 @@ You will also need to run the lambda function which will handle connecting the u
 To build the static files and lambda function, simply run the `build` command.
 
 ``` bash
-yarn run build
+yarn build
 ```
 
 ## Testing
@@ -56,7 +55,6 @@ yarn run build
 All new code for the project should be accompanied by reasonable tests. The only exception for this right now is code that directly interacts with Pusher, in which case steps for manually testing the feature should be included in your PR.
 
 ``` bash
-# run tests
 yarn test
 ```
 
