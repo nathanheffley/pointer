@@ -2,7 +2,7 @@ import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import NotFound from '@/components/NotFound'
 
 describe('NotFound.vue', () => {
-  it ('should render a button to the home page', () => {
+  it('should render a button to the home page', () => {
     const wrapper = shallowMount(NotFound, {
       stubs: {
         RouterLink: RouterLinkStub
@@ -56,12 +56,12 @@ describe('NotFound.vue', () => {
     wrapper.find('input#room').setValue('123')
 
     expect(wrapper.findAll(RouterLinkStub).at(1).props().to)
-    .toEqual({
-      name: 'SessionPage',
-      params: {
-        id: '123'
-      }
-    })
+      .toEqual({
+        name: 'SessionPage',
+        params: {
+          id: '123'
+        }
+      })
   })
 
   it('should trim the session the user typed in', () => {
@@ -73,11 +73,11 @@ describe('NotFound.vue', () => {
     wrapper.find('input#room').setValue('    123  ')
 
     expect(wrapper.findAll(RouterLinkStub).at(1).props().to)
-    .toEqual({
-      name: 'SessionPage',
-      params: {
-        id: '123'
-      }
-    })
+      .toEqual({
+        name: 'SessionPage',
+        params: {
+          id: '123'
+        }
+      })
   })
 })

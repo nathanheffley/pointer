@@ -73,12 +73,12 @@ describe('LoginPage.vue', () => {
     wrapper.find('input#room').setValue('123')
 
     expect(wrapper.find(RouterLinkStub).props().to)
-    .toEqual({
-      name: 'SessionPage',
-      params: {
-        id: '123',
-        name: 'John Doe'
-      }
-    })
+      .toEqual({
+        name: 'SessionPage',
+        params: {
+          id: '123',
+          name: 'John Doe'
+        }
+      })
   })
 })

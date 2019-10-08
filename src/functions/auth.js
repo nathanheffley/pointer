@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-exports.handler = function(event, context, callback) {
+exports.handler = function (event, context, callback) {
   let query = event.queryStringParameters
 
   let Pusher = require('pusher')
@@ -21,13 +21,13 @@ exports.handler = function(event, context, callback) {
   }
 
   let auth = JSON.stringify(pusher.authenticate(query.socket_id, query.channel_name, presenceData))
-  let authCallback = query.callback.replace(/\"/g,"") + "(" + auth + ");"
+  let authCallback = query.callback.replace(/"/g, '') + '(' + auth + ');'
 
   callback(null, {
     statusCode: 200,
     headers: {
-      'Content-Type': 'application/javascript',
+      'Content-Type': 'application/javascript'
     },
-    body: authCallback,
+    body: authCallback
   })
 }
