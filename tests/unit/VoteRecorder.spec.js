@@ -37,15 +37,14 @@ describe('VoteRecorder.vue', () => {
       }
     })
 
-    expect(wrapper.findAll('button').at(0).classes('btn-grey')).toBeTruthy()
-    expect(wrapper.findAll('button').at(1).classes('btn-grey')).toBeTruthy()
-    expect(wrapper.findAll('button').at(2).classes('btn-grey')).toBeTruthy()
+    expect(wrapper.findAll('button').at(0).classes('btn-gray')).toBeTruthy()
+    expect(wrapper.findAll('button').at(1).classes('btn-gray')).toBeTruthy()
+    expect(wrapper.findAll('button').at(2).classes('btn-gray')).toBeTruthy()
     expect(wrapper.findAll('button').at(3).classes('btn-blue')).toBeTruthy()
-    expect(wrapper.findAll('button').at(3).classes('btn-grey')).toBeTruthy()
-    expect(wrapper.findAll('button').at(4).classes('btn-grey')).toBeTruthy()
-    expect(wrapper.findAll('button').at(5).classes('btn-grey')).toBeTruthy()
-    expect(wrapper.findAll('button').at(6).classes('btn-grey')).toBeTruthy()
-    expect(wrapper.findAll('button').at(7).classes('btn-grey')).toBeTruthy()
+    expect(wrapper.findAll('button').at(4).classes('btn-gray')).toBeTruthy()
+    expect(wrapper.findAll('button').at(5).classes('btn-gray')).toBeTruthy()
+    expect(wrapper.findAll('button').at(6).classes('btn-gray')).toBeTruthy()
+    expect(wrapper.findAll('button').at(7).classes('btn-gray')).toBeTruthy()
   })
 
   it('should allow the user to vote for 0', () => {

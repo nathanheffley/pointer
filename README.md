@@ -16,29 +16,23 @@ Pointer uses [Pusher](https://pusher.com/), specifically their [presence channel
 
 To get started, you'll need to clone the repo and install its dependencies. These examples will use [Yarn](https://yarnpkg.com/) since that is the maintained lock file, although npm should work just as well.
 
-``` bash
-git clone https://github.com/NathanHeffley/pointer.git
+```bash
+yarn install
 ```
 
-``` bash
-# install dependencies
-yarn
-```
-
-Now that you have the code downloaded, you should copy the `.env.example` to create a `.env` file. Add your public Pusher key (not your secret) and change the default cluster if your app uses a different location.
+Now that you have the code installed, you should copy the `.env.example` to create a `.env.local` file. Add your public PUsher key and change the default cluster if your app uses a different location.
 
 ### Development
 
-To start the dev server, simply run the `dev` command.
+To start the dev server on `localhost:8080`, simply run the `serve` command.
 
-``` bash
-# serve with hot reload at localhost:8080
-yarn dev
+```bash
+yarn run serve
 ```
 
-You will also need to run the lambda function which will handle connecting the users to the Pusher channel. Start it by using the `netlify-lambda` command.
+You will also need to run the lambda function which will handle connecting the users to the Pusher channel. Start it by using the `netlify-lambda' command.
 
-``` bash
+```bash
 ./node_modules/.bin/netlify-lambda serve src/functions
 ```
 
@@ -46,16 +40,16 @@ You will also need to run the lambda function which will handle connecting the u
 
 To build the static files and lambda function, simply run the `build` command.
 
-``` bash
-yarn build
+```bash
+yarn run build
 ```
 
-## Testing
+### Testing
 
 All new code for the project should be accompanied by reasonable tests. The only exception for this right now is code that directly interacts with Pusher, in which case steps for manually testing the feature should be included in your PR.
 
-``` bash
-yarn test
+```bash
+yarn run test:unit
 ```
 
 ## License

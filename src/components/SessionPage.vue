@@ -1,15 +1,15 @@
 <template>
   <div>
-    <nav class="bg-blue-lightest text-blue-darker py-6">
-      <h1 class="text-center font-normal">Pointing Poker</h1>
-      <div class="flex justify-center mt-2">
-        <span class="bg-transparent text-sm font-bold text-blue-darker cursor-pointer" @click="copyLink">{{ sessionUrl }}</span>
+    <nav class="bg-blue-100 text-blue-800 py-6">
+      <h1 class="text-3xl text-center font-normal">Pointing Poker</h1>
+      <div class="flex justify-center items-center mt-2">
+        <span class="bg-transparent text-sm font-bold text-blue-800 cursor-pointer" @click="copyLink">{{ sessionUrl }}</span>
         <img src="/static/clone.svg" class="ml-2 cursor-pointer opacity-60 h-4" @click="copyLink" alt="Copy" title="Copy" />
       </div>
     </nav>
 
     <main class="text-black">
-      <div class="px-4 py-6 max-w-sm mx-auto">
+      <div class="px-4 py-6 max-w-lg mx-auto">
         <vote-recorder v-model="vote" v-on:input="clearPass()" v-on:pass="passVote()"></vote-recorder>
 
         <div class="sm:flex sm:justify-between">
@@ -18,7 +18,7 @@
             <user-item v-for="user in users" :key="user.userId" :user="user" />
           </ul>
 
-          <div class="mt-6 text-grey-darkest">
+          <div class="mt-6 text-gray-800">
             <vote-results :votes="votes" :show="showVotes"></vote-results>
 
             <conditional-button :enabled="(votes.filter(vote => vote !== null).length > 0) && !showVotes" @click="revealVotes">Reveal</conditional-button>
@@ -35,6 +35,7 @@ import VoteRecorder from './VoteRecorder.vue'
 import VoteResults from './VoteResults.vue'
 import UserItem from './UserItem.vue'
 import ConditionalButton from './ConditionalButton.vue'
+import Pusher from 'pusher-js'
 
 export default {
   name: 'SessionPage',
@@ -67,10 +68,10 @@ export default {
     }
 
     // eslint-disable-next-line
-    let pusher = new Pusher(process.env.PUSHER_KEY, {
-      cluster: process.env.PUSHER_CLUSTER,
+    let pusher = new Pusher(process.env.VUE_APP_PUSHER_KEY, {
+      cluster: process.env.VUE_APP_PUSHER_CLUSTER,
       forceTLS: true,
-      authEndpoint: `${process.env.API_HOST}/auth`,
+      authEndpoint: `${process.env.VUE_APP_API_HOST}/auth`,
       authTransport: 'jsonp',
       auth: {
         params: {
@@ -207,7 +208,7 @@ export default {
       return this.votes.filter(vote => vote !== null).length === votingUserCount
     },
     sessionUrl: function () {
-      return `${process.env.FRONTEND_HOST}/s/${this.session}`
+      return `${process.env.VUE_APP_HOST}/s/${this.session}`
     }
   },
 
