@@ -1,8 +1,8 @@
 <template>
   <div>
     <span class="block uppercase font-light text-3xl">Results</span>
-    <ul v-if="$props.show && (voteResults.length > 0)" class="list-reset mt-2">
-      <li class="mt-2 text-2xl" v-for="result in voteResults" :key="result.points">
+    <ul v-if="$props.show && (voteResults.length > 0)" class="list-reset my-1">
+      <li class="py-1 relative text-2xl" v-for="result in voteResults" :key="result.points" @mouseover="hovering = result.points" @mouseleave="hovering = null">
         <span :class="[ result.highest ? 'bg-blue-500' : 'bg-gray-500', 'points' ]" v-text="result.points"></span>
         <span class="ml-2 text-gray-700" v-text="result.votes + ' ' + pluralizedVote(result.votes)"></span>
       </li>
@@ -15,6 +15,18 @@
 export default {
   name: 'VoteResults',
   props: ['votes', 'show'],
+  data: function () {
+    return {
+      hovering: null
+    }
+  },
+
+  watch: {
+    hovering: function (value) {
+      this.$emit('hovering', value)
+    }
+  },
+
   computed: {
     voteResults: function () {
       let results = {
@@ -63,6 +75,7 @@ export default {
       return finalResults
     }
   },
+
   methods: {
     pluralizedVote: function (votes) {
       if (votes === 1) {

@@ -57,4 +57,61 @@ describe('VoteResults.vue', () => {
     expect(wrapper.text()).toContain('5 1 vote')
     expect(wrapper.text()).toContain('3 3 votes')
   })
+
+  it('should emit the vote being hovered over', () => {
+    const emitWrapper = shallowMount(VoteResults)
+
+    emitWrapper.setProps({
+      votes: [3, 5, 5],
+      show: true
+    })
+
+    emitWrapper.findAll('li').at(0).trigger('mouseover')
+    expect(emitWrapper.emitted('hovering').length).toBe(1)
+    expect(emitWrapper.emitted('hovering')[0]).toEqual(["3"])
+  })
+
+  it('should emit null when hovering stops', () => {
+    const emitWrapper = shallowMount(VoteResults)
+
+    emitWrapper.setProps({
+      votes: [3, 5, 5],
+      show: true
+    })
+
+    const result = emitWrapper.findAll('li').at(1)
+
+    result.trigger('mouseover')
+    expect(emitWrapper.emitted('hovering').length).toBe(1)
+    expect(emitWrapper.emitted('hovering')[0]).toEqual(["5"])
+
+    result.trigger('mouseleave')
+    expect(emitWrapper.emitted('hovering').length).toBe(2)
+    expect(emitWrapper.emitted('hovering')[1]).toEqual([null])
+  })
+
+  it('should emit the vote only once while being hovered over', () => {
+    const emitWrapper = shallowMount(VoteResults)
+
+    emitWrapper.setProps({
+      votes: [3, 5, 5],
+      show: true
+    })
+
+    const result = emitWrapper.findAll('li').at(0)
+
+    result.trigger('mouseover')
+    result.trigger('mouseover')
+    result.trigger('mouseover')
+    expect(emitWrapper.emitted('hovering').length).toBe(1)
+    expect(emitWrapper.emitted('hovering')[0]).toEqual(["3"])
+
+    result.trigger('mouseleave')
+    expect(emitWrapper.emitted('hovering').length).toBe(2)
+    expect(emitWrapper.emitted('hovering')[1]).toEqual([null])
+
+    result.trigger('mouseover')
+    expect(emitWrapper.emitted('hovering').length).toBe(3)
+    expect(emitWrapper.emitted('hovering')[2]).toEqual(["3"])
+  })
 })
