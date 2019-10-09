@@ -14,12 +14,12 @@
 
         <div class="sm:flex sm:justify-between">
           <ul class="mt-4 pr-2 list-reset text-3xl overflow-hidden">
-            <user-item :user="{username, vote, pass}" />
-            <user-item v-for="user in users" :key="user.userId" :user="user" />
+            <user-item :user="{username, vote, pass}" :hovering="hoveringVote" />
+            <user-item v-for="user in users" :key="user.userId" :user="user" :hovering="hoveringVote" />
           </ul>
 
           <div class="mt-6 text-gray-800">
-            <vote-results :votes="votes" :show="showVotes"></vote-results>
+            <vote-results :votes="votes" :show="showVotes" v-on:hovering="highlightVoters"></vote-results>
 
             <conditional-button :enabled="(votes.filter(vote => vote !== null).length > 0) && !showVotes" @click="revealVotes">Reveal</conditional-button>
             <conditional-button :enabled="votes.filter(vote => vote !== null).length > 0" @click="clearVotes">Clear</conditional-button>
@@ -58,7 +58,8 @@ export default {
       pass: false,
       vote: null,
       forceReveal: false,
-      users: []
+      users: [],
+      hoveringVote: null,
     }
   },
 
@@ -238,6 +239,10 @@ export default {
       })
       this.forceReveal = false
       this.channel.trigger('client-clear-votes', {})
+    },
+
+    highlightVoters: function (hoveringVote) {
+      this.hoveringVote = hoveringVote
     }
   }
 }

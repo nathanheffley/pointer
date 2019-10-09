@@ -41,4 +41,59 @@ describe('UserItem.vue', () => {
     expect(wrapper.find('span').text()).toBe('John Smith')
     expect(wrapper.find('img').attributes('src')).toContain('arrow')
   })
+
+  it('should not render the user as faded when hovering is null', () => {
+    wrapper.setProps({
+      user: {
+        username: 'John Smith',
+        vote: 5
+      },
+      hovering: null 
+    })
+
+    expect(wrapper.find('span').classes()).not.toContain('text-gray-400')
+    expect(wrapper.find('img').classes()).not.toContain('opacity-50')
+  })
+
+  it('should render the user as faded when hovering a vote they did not vote for', () => {
+    wrapper.setProps({
+      user: {
+        username: 'John Smith',
+        vote: 5
+      },
+      hovering: "3"
+    })
+
+    expect(wrapper.find('span').classes()).toContain('text-gray-400')
+    expect(wrapper.find('img').classes()).toContain('opacity-50')
+  })
+
+  it('should render the user as faded when they have not voted or passed', () => {
+    wrapper.setProps({
+      user: {
+        username: 'John Smith',
+        vote: null,
+        pass: false
+      },
+      hovering: "3"
+    })
+
+    expect(wrapper.find('span').classes()).toContain('text-gray-400')
+    expect(wrapper.find('img').classes()).toContain('opacity-50')
+  })
+
+  it('should render the user as faded when they passed', () => {
+    wrapper.setProps({
+      user: {
+        username: 'John Smith',
+        vote: null,
+        pass: true
+      },
+      hovering: "3"
+    })
+
+    expect(wrapper.find('span').classes()).toContain('text-gray-400')
+    expect(wrapper.find('span').classes()).not.toContain('text-gray-700')
+    expect(wrapper.find('img').classes()).toContain('opacity-50')
+  })
 })
