@@ -3,8 +3,8 @@
     <span class="block uppercase font-light text-3xl">Results</span>
     <ul v-if="$props.show && (voteResults.length > 0)" class="list-reset mt-2">
       <li class="mt-2 text-2xl" v-for="result in voteResults" :key="result.points">
-        <span :class="[ result.highest ? 'bg-blue' : 'bg-grey', 'points' ]" v-text="result.points"></span>
-        <span v-text="result.votes + ' ' + pluralizedVote(result.votes)"></span>
+        <span :class="[ result.highest ? 'bg-blue-500' : 'bg-gray-500', 'points' ]" v-text="result.points"></span>
+        <span class="ml-2 text-gray-700" v-text="result.votes + ' ' + pluralizedVote(result.votes)"></span>
       </li>
     </ul>
     <span v-else class="block mt-2 font-light text-xl">Waiting...</span>
