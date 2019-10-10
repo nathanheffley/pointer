@@ -51,7 +51,6 @@ export default {
 
   data () {
     return {
-      channel: null,
       session: this.$route.params.id,
       userId: null,
       username: this.$props.name,
@@ -167,6 +166,8 @@ export default {
       this.pusher.disconnect()
       this.channel = null
       this.pusher = null
+      this.vote = null
+      this.pass = false
       this.users = []
     },
 
