@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import UserItem from '@/components/UserItem'
 
 describe('UserItem.vue', () => {
@@ -95,5 +95,59 @@ describe('UserItem.vue', () => {
     expect(wrapper.find('span').classes()).toContain('text-gray-400')
     expect(wrapper.find('span').classes()).not.toContain('text-gray-700')
     expect(wrapper.find('img').classes()).toContain('opacity-50')
+  })
+
+  it('should not render an edit button when user is not self', () => {
+    wrapper.setProps({
+      self: false
+    })
+
+    expect(wrapper.find('button').exists()).toBe(false)
+  })
+
+  it('should display the edit button when editing name', () => {
+    wrapper.setProps({
+      self: true
+    })
+
+    wrapper.find('button').trigger('click')
+
+    expect(wrapper.find('button').classes()).not.toContain('opacity-0')
+    expect(wrapper.find('button').classes()).toContain('opacity-100')
+  })
+
+  it('should display an input with the current name when editing', () => {
+    const fullWrap = mount(UserItem, {
+      propsData: {
+        self: true,
+        user: {
+          username: 'John Smith'
+        }
+      }
+    })
+
+    fullWrap.find('button').trigger('click')
+
+    expect(fullWrap.find('input').element.value).toBe('John Smith')
+  })
+
+  // Because of the $nextTick() used to focus the input I can't
+  // get the button and input in this test to work properly.
+  it('should emit the new username after saving', () => {
+    wrapper.setProps({
+      self: true,
+      user: {
+        username: 'John Smith'
+      }
+    })
+
+    wrapper.setData({
+      name: 'Jane Doe'
+    })
+
+    wrapper.vm.updateName()
+
+    expect(localStorage.username).toBe('Jane Doe')
+    expect(wrapper.emitted('usernameChange').length).toBe(1)
   })
 })

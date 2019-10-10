@@ -81,4 +81,16 @@ describe('LoginPage.vue', () => {
         }
       })
   })
+
+  it('should load localStorage username if available', () => {
+    localStorage.username = 'Jane Doe'
+
+    const wrapper = shallowMount(LoginPage, {
+      stubs: {
+        RouterLink: RouterLinkStub
+      }
+    })
+
+    expect(wrapper.find('input#name').element.value).toEqual('Jane Doe')
+  })
 })

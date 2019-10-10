@@ -41,6 +41,11 @@ export default {
       session: '',
       name: ''
     }
+  },
+  mounted () {
+    if (localStorage.username) {
+      this.name = localStorage.username
+    }
   }
 }
 </script>

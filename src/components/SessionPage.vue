@@ -14,8 +14,8 @@
 
         <div class="sm:flex sm:justify-between">
           <ul class="mt-4 pr-2 list-reset text-3xl overflow-hidden">
-            <user-item :user="{username, vote, pass}" :hovering="hoveringVote" />
-            <user-item v-for="user in users" :key="user.userId" :user="user" :hovering="hoveringVote" />
+            <user-item :self="true" :user="{username, vote, pass}" :hovering="hoveringVote" v-on:usernameChange="handleUsernameChange" />
+            <user-item v-for="user in users" :key="user.userId" :self="false" :user="user" :hovering="hoveringVote" />
           </ul>
 
           <div class="mt-6 text-gray-800">
@@ -65,8 +65,14 @@ export default {
 
   mounted () {
     while (this.username == null || this.username.length < 1) {
-      this.username = prompt('Please enter your username:').trim()
+      if (localStorage.username) {
+        this.username = localStorage.username
+      } else {
+        this.username = prompt('Please enter your username:').trim()
+      }
     }
+
+    localStorage.username = this.username
 
     // eslint-disable-next-line
     let pusher = new Pusher(process.env.VUE_APP_PUSHER_KEY, {
@@ -169,6 +175,14 @@ export default {
         user.vote = null
       })
     })
+
+    channel.bind('client-update-name', ({userId, username}) => {
+      this.users.forEach(function (user) {
+        if (user.userId === userId) {
+          user.username = username
+        }
+      })
+    })
   },
 
   watch: {
@@ -239,6 +253,14 @@ export default {
       })
       this.forceReveal = false
       this.channel.trigger('client-clear-votes', {})
+    },
+
+    handleUsernameChange: function (username) {
+      this.username = username
+      this.channel.trigger('client-update-name', {
+        userId: this.userId,
+        username: username
+      })
     },
 
     highlightVoters: function (hoveringVote) {
