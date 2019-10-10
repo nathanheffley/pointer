@@ -61,3 +61,7 @@
     margin-left: -3rem;
   }
 }
+
+.input-underline {
+  box-shadow: 0 3px 0 0 #4299e1;
+}
