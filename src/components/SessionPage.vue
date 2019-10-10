@@ -10,6 +10,11 @@
 
     <main class="text-black">
       <div class="px-4 py-6 max-w-lg mx-auto">
+        <div v-show="!online" class="mb-4 flex items-center">
+          <img src="/static/warning.svg" class="h-8 w-8" />
+          <span class="ml-4 text-red-700 text-xl"><span class="font-bold">You are not online.</span> You'll be reconnected as soon as you have an internet connection.</span>
+        </div>
+
         <vote-recorder v-model="vote" v-on:input="clearPass()" v-on:pass="passVote()"></vote-recorder>
 
         <div class="sm:flex sm:justify-between">
@@ -61,6 +66,7 @@ export default {
       hoveringVote: null,
       pusher: null,
       channel: null,
+      online: false,
     }
   },
 
@@ -75,7 +81,20 @@ export default {
 
     localStorage.username = this.username
 
-    this.connect()
+    window.addEventListener('online', () => {
+      this.online = true
+      this.connect()
+    })
+
+    window.addEventListener('offline', () => {
+      this.online = false
+      this.disconnect()
+    })
+
+    if (navigator.onLine) {
+      this.online = true
+      this.connect()
+    }
   },
 
   watch: {
