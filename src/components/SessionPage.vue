@@ -60,6 +60,8 @@ export default {
       forceReveal: false,
       users: [],
       hoveringVote: null,
+      pusher: null,
+      channel: null,
     }
   },
 
@@ -74,115 +76,7 @@ export default {
 
     localStorage.username = this.username
 
-    // eslint-disable-next-line
-    let pusher = new Pusher(process.env.VUE_APP_PUSHER_KEY, {
-      cluster: process.env.VUE_APP_PUSHER_CLUSTER,
-      forceTLS: true,
-      authEndpoint: `${process.env.VUE_APP_API_HOST}/auth`,
-      authTransport: 'jsonp',
-      auth: {
-        params: {
-          username: this.username
-        }
-      }
-    })
-
-    pusher.connection.bind('connected', () => {
-      this.userId = pusher.connection.socket_id
-    })
-
-    let channel = pusher.subscribe('presence-' + this.session)
-
-    channel.bind('pusher:subscription_succeeded', () => {
-      this.channel = channel
-      channel.members.each(member => {
-        if (member.id !== this.userId) {
-          this.users.push({
-            userId: member.id,
-            username: member.info.name,
-            vote: null,
-            pass: false
-          })
-        }
-      })
-    })
-
-    channel.bind('pusher:member_added', (member) => {
-      let found = false
-
-      this.users.forEach(function (user) {
-        if (user.userId === member.id) {
-          found = true
-        }
-      })
-
-      if (!found) {
-        this.users.push({
-          userId: member.id,
-          username: member.info.name,
-          vote: member.info.vote,
-          pass: member.info.pass ? member.info.pass : false
-        })
-      }
-
-      if (this.vote !== null) {
-        this.channel.trigger('client-vote', {
-          userId: this.userId,
-          points: this.vote
-        })
-      }
-
-      if (this.pass !== false) {
-        this.channel.trigger('client-pass', {
-          userId: this.userId,
-          pass: this.pass
-        })
-      }
-    })
-
-    channel.bind('pusher:member_removed', (member) => {
-      this.users.forEach(function (user, index, users) {
-        if (user.userId === member.id) {
-          users.splice(index, 1)
-        }
-      })
-    })
-
-    channel.bind('client-vote', ({userId, points}) => {
-      this.users.forEach(function (user) {
-        if (user.userId === userId) {
-          user.vote = points
-        }
-      })
-    })
-
-    channel.bind('client-pass', ({userId, pass}) => {
-      this.users.forEach(function (user) {
-        if (user.userId === userId) {
-          user.pass = pass
-        }
-      })
-    })
-
-    channel.bind('client-reveal-votes', () => {
-      this.forceReveal = true
-    })
-
-    channel.bind('client-clear-votes', () => {
-      this.forceReveal = false
-      this.vote = null
-      this.users.forEach(function (user) {
-        user.vote = null
-      })
-    })
-
-    channel.bind('client-update-name', ({userId, username}) => {
-      this.users.forEach(function (user) {
-        if (user.userId === userId) {
-          user.username = username
-        }
-      })
-    })
+    this.connect()
   },
 
   watch: {
@@ -257,14 +151,130 @@ export default {
 
     handleUsernameChange: function (username) {
       this.username = username
-      this.channel.trigger('client-update-name', {
-        userId: this.userId,
-        username: username
-      })
+      this.reconnect()
     },
 
     highlightVoters: function (hoveringVote) {
       this.hoveringVote = hoveringVote
+    },
+
+    reconnect: function () {
+      this.disconnect()
+      this.connect()
+    },
+
+    disconnect: function () {
+      this.pusher.disconnect()
+      this.channel = null
+      this.pusher = null
+      this.users = []
+    },
+
+    connect: function () {
+      // eslint-disable-next-line
+      let pusher = new Pusher(process.env.VUE_APP_PUSHER_KEY, {
+        cluster: process.env.VUE_APP_PUSHER_CLUSTER,
+        forceTLS: true,
+        authEndpoint: `${process.env.VUE_APP_API_HOST}/auth`,
+        authTransport: 'jsonp',
+        auth: {
+          params: {
+            username: this.username
+          }
+        }
+      })
+
+      pusher.connection.bind('connected', () => {
+        this.userId = pusher.connection.socket_id
+      })
+
+      let channel = pusher.subscribe('presence-' + this.session)
+
+      channel.bind('pusher:subscription_succeeded', () => {
+        this.channel = channel
+        channel.members.each(member => {
+          if (member.id !== this.userId) {
+            this.users.push({
+              userId: member.id,
+              username: member.info.name,
+              vote: null,
+              pass: false
+            })
+          }
+        })
+      })
+
+      channel.bind('pusher:member_added', (member) => {
+        let found = false
+
+        this.users.forEach(function (user) {
+          if (user.userId === member.id) {
+            found = true
+          }
+        })
+
+        if (!found) {
+          this.users.push({
+            userId: member.id,
+            username: member.info.name,
+            vote: member.info.vote,
+            pass: member.info.pass ? member.info.pass : false
+          })
+        }
+
+        if (this.vote !== null) {
+          this.channel.trigger('client-vote', {
+            userId: this.userId,
+            points: this.vote
+          })
+        }
+
+        if (this.pass !== false) {
+          this.channel.trigger('client-pass', {
+            userId: this.userId,
+            pass: this.pass
+          })
+        }
+      })
+
+      channel.bind('pusher:member_removed', (member) => {
+        this.users.forEach(function (user, index, users) {
+          if (user.userId === member.id) {
+            users.splice(index, 1)
+          }
+        })
+      })
+
+      channel.bind('client-vote', ({userId, points}) => {
+        this.users.forEach(function (user) {
+          if (user.userId === userId) {
+            user.vote = points
+          }
+        })
+      })
+
+      channel.bind('client-pass', ({userId, pass}) => {
+        this.users.forEach(function (user) {
+          if (user.userId === userId) {
+            user.pass = pass
+          }
+        })
+      })
+
+      channel.bind('client-reveal-votes', () => {
+        this.forceReveal = true
+      })
+
+      channel.bind('client-clear-votes', () => {
+        this.forceReveal = false
+        this.vote = null
+        this.users.forEach(function (user) {
+          user.vote = null
+        })
+      })
+
+      this.pusher = pusher
+      this.channel = channel
     }
   }
 }
