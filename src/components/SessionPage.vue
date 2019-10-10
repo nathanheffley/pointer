@@ -66,6 +66,7 @@ export default {
       hoveringVote: null,
       pusher: null,
       channel: null,
+      online: false,
     }
   },
 
@@ -81,14 +82,19 @@ export default {
     localStorage.username = this.username
 
     window.addEventListener('online', () => {
+      this.online = true
       this.connect()
     })
 
     window.addEventListener('offline', () => {
+      this.online = false
       this.disconnect()
     })
 
-    this.connect()
+    if (navigator.onLine) {
+      this.online = true
+      this.connect()
+    }
   },
 
   watch: {
@@ -108,9 +114,6 @@ export default {
   },
 
   computed: {
-    online: function () {
-      return navigator.onLine
-    },
     votes: function () {
       let otherVotes = this.users.map(function (user) {
         return user.vote
