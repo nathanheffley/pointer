@@ -82,6 +82,25 @@ describe('LoginPage.vue', () => {
       })
   })
 
+  it('should link the user to the lowercase version of the session they typed in', () => {
+    const wrapper = shallowMount(LoginPage, {
+      stubs: {
+        RouterLink: RouterLinkStub
+      }
+    })
+    wrapper.find('input#name').setValue('John Doe')
+    wrapper.find('input#room').setValue('UpPeRCaSe')
+
+    expect(wrapper.find(RouterLinkStub).props().to)
+      .toEqual({
+        name: 'SessionPage',
+        params: {
+          id: 'uppercase',
+          name: 'John Doe'
+        }
+      })
+  })
+
   it('should load localStorage username if available', () => {
     localStorage.username = 'Jane Doe'
 
