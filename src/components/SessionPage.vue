@@ -97,6 +97,10 @@ export default {
     }
   },
 
+  created () {
+    document.title = this.session + ' - Pointer'
+  },
+
   watch: {
     vote: function (value) {
       this.channel.trigger('client-vote', {
