@@ -208,7 +208,7 @@ export default {
         this.userId = pusher.connection.socket_id
       })
 
-      let channel = pusher.subscribe('presence-' + this.session)
+      let channel = pusher.subscribe('presence-' + this.session.toLowerCase())
 
       channel.bind('pusher:subscription_succeeded', () => {
         this.channel = channel
