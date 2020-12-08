@@ -17,7 +17,7 @@
     "pusher": "^3.0.0",
     "pusher-js": "^5.0.2",
     "register-service-worker": "^1.6.2",
-    "tailwindcss": "^1.1.2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"

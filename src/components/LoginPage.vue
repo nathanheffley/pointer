@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="bg-blue-100 text-blue-800 py-6">
+    <nav class="bg-blue-50 text-blue-800 py-6">
       <h1 class="text-3xl text-center font-normal">Pointing Poker</h1>
     </nav>
     <main class="text-black">
