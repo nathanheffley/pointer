@@ -10,9 +10,25 @@
       <li><button value="13" @click="recordVote(13)" :class="[ isVote(13) ? 'btn-blue' : 'btn-gray', 'btn text-xl w-16' ]">13</button></li>
       <li><button value="?" @click="recordVote('?')" :class="[ isVote('?') ? 'btn-blue' : 'btn-gray', 'btn text-xl w-16' ]">?</button></li>
     </ul>
-    <div class="flex justify-between mt-2 sm:max-w-xs">
-      <button @click="passVote()" class="italic text-blue-600">Pass</button>
-      <button @click="recordVote(null)" class="italic text-gray-600">Clear your vote...</button>
+    <div class="mt-2 sm:max-w-xs">
+      <div
+        v-if="showPassInstructional"
+        @click="dismissPassInstructional()"
+        class="py-2 px-3 flex items-start rounded bg-blue-50 text-blue-900 shadow my-4 xl:absolute xl:-ml-80 xl:-mt-12 xl:w-72"
+      >
+        <div>
+          <span class="font-semibold">You can <i>Pass</i> if you don't plan on voting.</span>
+          This is helpful so somebody doesn't have to reveal the vote every round.
+        </div>
+        <button
+          data-test="pass-instructional-dismiss-button"
+          class="leading-none p-1 -my-1 -mr-1 text-xl"
+        >&times;</button>
+      </div>
+      <div class="flex justify-between">
+        <button @click="passVote()" class="italic text-blue-600">Pass</button>
+        <button @click="recordVote(null)" class="italic text-gray-600">Clear your vote...</button>
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +36,7 @@
 <script>
 export default {
   name: 'VoteRecorder',
-  props: ['value'],
+  props: ['value', 'showPassInstructional'],
   methods: {
     isVote: function (points) {
       if (this.value === null) return true
@@ -29,11 +45,18 @@ export default {
 
     passVote: function () {
       this.$emit('pass')
+      if (this.showPassInstructional) {
+        this.dismissPassInstructional()
+      }
     },
 
     recordVote: function (points) {
       this.$emit('input', points)
-    }
+    },
+
+    dismissPassInstructional: function () {
+      this.$emit('dismiss-pass-instructional')
+    },
   }
 }
 </script>

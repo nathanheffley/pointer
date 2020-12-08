@@ -15,7 +15,13 @@
           <span class="ml-4 text-red-700 text-xl"><span class="font-bold">You are not online.</span> You'll be reconnected as soon as you have an internet connection.</span>
         </div>
 
-        <vote-recorder v-model="vote" v-on:input="clearPass()" v-on:pass="passVote()"></vote-recorder>
+        <vote-recorder
+          v-model="vote"
+          v-on:input="clearPass()"
+          v-on:pass="passVote()"
+          :show-pass-instructional="showPassInstructional"
+          v-on:dismiss-pass-instructional="dismissPassInstructional"
+        ></vote-recorder>
 
         <div class="sm:flex sm:justify-between">
           <ul class="mt-4 pr-2 list-reset text-3xl overflow-hidden">
@@ -67,6 +73,7 @@ export default {
       pusher: null,
       channel: null,
       online: false,
+      showPassInstructional: false,
     }
   },
 
@@ -94,6 +101,10 @@ export default {
     if (navigator.onLine) {
       this.online = true
       this.connect()
+    }
+
+    if (!localStorage.hasDismissedPassInstructional) {
+      this.showPassInstructional = true
     }
   },
 
@@ -299,7 +310,12 @@ export default {
 
       this.pusher = pusher
       this.channel = channel
-    }
+    },
+
+    dismissPassInstructional: function () {
+      this.showPassInstructional = false
+      localStorage.hasDismissedPassInstructional = true
+    },
   }
 }
 </script>

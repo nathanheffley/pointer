@@ -5,7 +5,8 @@ describe('VoteRecorder.vue', () => {
   it('should have all the buttons for voting', () => {
     const wrapper = shallowMount(VoteRecorder, {
       propsData: {
-        value: null
+        value: null,
+        showPassInstructional: false,
       }
     })
 
@@ -52,6 +53,7 @@ describe('VoteRecorder.vue', () => {
 
     wrapper.findAll('button').at(0).trigger('click')
     expect(wrapper.emitted('pass')).toBeUndefined()
+    expect(wrapper.emitted('dismiss-pass-instructional')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([0])
   })
@@ -61,6 +63,7 @@ describe('VoteRecorder.vue', () => {
 
     wrapper.findAll('button').at(1).trigger('click')
     expect(wrapper.emitted('pass')).toBeUndefined()
+    expect(wrapper.emitted('dismiss-pass-instructional')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([1])
   })
@@ -70,6 +73,7 @@ describe('VoteRecorder.vue', () => {
 
     wrapper.findAll('button').at(2).trigger('click')
     expect(wrapper.emitted('pass')).toBeUndefined()
+    expect(wrapper.emitted('dismiss-pass-instructional')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([2])
   })
@@ -79,6 +83,7 @@ describe('VoteRecorder.vue', () => {
 
     wrapper.findAll('button').at(3).trigger('click')
     expect(wrapper.emitted('pass')).toBeUndefined()
+    expect(wrapper.emitted('dismiss-pass-instructional')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([3])
   })
@@ -88,6 +93,7 @@ describe('VoteRecorder.vue', () => {
 
     wrapper.findAll('button').at(4).trigger('click')
     expect(wrapper.emitted('pass')).toBeUndefined()
+    expect(wrapper.emitted('dismiss-pass-instructional')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([5])
   })
@@ -97,6 +103,7 @@ describe('VoteRecorder.vue', () => {
 
     wrapper.findAll('button').at(5).trigger('click')
     expect(wrapper.emitted('pass')).toBeUndefined()
+    expect(wrapper.emitted('dismiss-pass-instructional')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([8])
   })
@@ -106,6 +113,7 @@ describe('VoteRecorder.vue', () => {
 
     wrapper.findAll('button').at(6).trigger('click')
     expect(wrapper.emitted('pass')).toBeUndefined()
+    expect(wrapper.emitted('dismiss-pass-instructional')).toBeUndefined()
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([13])
   })
@@ -120,10 +128,44 @@ describe('VoteRecorder.vue', () => {
   })
 
   it('should allow the user to pass', () => {
-    const wrapper = shallowMount(VoteRecorder)
+    const wrapper = shallowMount(VoteRecorder, {
+      propsData: {
+        value: null,
+        showPassInstructional: false,
+      }
+    })
 
     wrapper.findAll('button.italic').at(0).trigger('click')
     expect(wrapper.emitted('pass').length).toBe(1)
+    expect(wrapper.emitted('dismiss-pass-instructional')).toBeUndefined()
+    expect(wrapper.emitted('input')).toBeUndefined()
+  })
+
+  it('should dismiss the pass instructional if user passes while it is shown', () => {
+    const wrapper = shallowMount(VoteRecorder, {
+      propsData: {
+        value: null,
+        showPassInstructional: true,
+      }
+    })
+
+    wrapper.findAll('button.italic').at(0).trigger('click')
+    expect(wrapper.emitted('pass').length).toBe(1)
+    expect(wrapper.emitted('dismiss-pass-instructional').length).toBe(1)
+    expect(wrapper.emitted('input')).toBeUndefined()
+  })
+
+  it('should dismiss the pass instructional if user clicks the close button', () => {
+    const wrapper = shallowMount(VoteRecorder, {
+      propsData: {
+        value: null,
+        showPassInstructional: true,
+      }
+    })
+
+    wrapper.findAll('[data-test="pass-instructional-dismiss-button"]').at(0).trigger('click')
+    expect(wrapper.emitted('pass')).toBeUndefined()
+    expect(wrapper.emitted('dismiss-pass-instructional').length).toBe(1)
     expect(wrapper.emitted('input')).toBeUndefined()
   })
 
@@ -133,5 +175,6 @@ describe('VoteRecorder.vue', () => {
     wrapper.findAll('button.italic').at(1).trigger('click')
     expect(wrapper.emitted('input').length).toBe(1)
     expect(wrapper.emitted('input')[0]).toEqual([null])
+    expect(wrapper.emitted('dismiss-pass-instructional')).toBeUndefined()
   })
 })
