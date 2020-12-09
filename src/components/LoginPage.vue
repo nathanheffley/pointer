@@ -1,13 +1,13 @@
 <template>
   <div>
-    <nav class="bg-blue-50 text-blue-800 py-6">
+    <nav class="py-6 bg-blue-50 text-blue-800 dark:bg-gray-900 dark:text-gray-300">
       <h1 class="text-3xl text-center font-normal">Pointing Poker</h1>
     </nav>
-    <main class="text-black">
+    <main>
       <form class="px-4 py-6 max-w-md mx-auto">
         <div class="flex items-center mb-6">
           <div class="w-1/4">
-            <label for="name" class="block text-gray-500 font-bold text-right pr-4">Name</label>
+            <label for="name" class="block font-bold text-right pr-4 text-gray-500">Name</label>
           </div>
           <div class="w-3/4">
             <input class="login-input" id="name" type="text" required v-model="name" />
@@ -24,8 +24,12 @@
         <div class="flex items-center">
           <div class="w-1/4"></div>
           <div class="w-3/4">
-            <router-link v-if="(session.trim().length > 0) && (name.trim().length > 0)" :to="{ name: 'SessionPage', params: { id: session.toLowerCase().trim(), name } }" tag="button" class="btn btn-blue no-underline">Host</router-link>
-            <button v-else class="btn btn-blue hover:bg-blue-500 opacity-50 cursor-not-allowed" disabled>Host</button>
+            <router-link v-if="(session.trim().length > 0) && (name.trim().length > 0)" :to="{ name: 'SessionPage', params: { id: session.toLowerCase().trim(), name } }" tag="button" class="btn btn-blue no-underline">
+              Join
+            </router-link>
+            <button v-else class="btn btn-blue hover:bg-blue-400 dark:hover:bg-blue-700 opacity-50 cursor-not-allowed" disabled>
+              Join
+            </button>
           </div>
         </div>
       </form>

@@ -11,30 +11,26 @@
       <li><button value="?" @click="recordVote('?')" :class="[ isVote('?') ? 'btn-blue' : 'btn-gray', 'btn text-xl w-16' ]">?</button></li>
     </ul>
     <div class="mt-2 sm:max-w-xs">
-      <div
-        v-if="showPassInstructional"
-        @click="dismissPassInstructional()"
-        class="py-2 px-3 flex items-start rounded bg-blue-50 text-blue-900 shadow my-4 xl:absolute xl:-ml-80 xl:-mt-12 xl:w-72"
+      <Instructional
+        :show="showPassInstructional"
+        v-on:dismiss="dismissPassInstructional()"
+        classes="my-4 xl:absolute xl:-ml-80 xl:-mt-12 xl:w-72"
       >
-        <div>
-          <span class="font-semibold">You can <i>Pass</i> if you don't plan on voting.</span>
-          This is helpful so somebody doesn't have to reveal the vote every round.
-        </div>
-        <button
-          data-test="pass-instructional-dismiss-button"
-          class="leading-none p-1 -my-1 -mr-1 text-xl"
-        >&times;</button>
-      </div>
+        <span class="font-semibold dark:font-bold">You can <i>Pass</i> if you don't plan on voting.</span>
+        This is helpful so somebody doesn't have to reveal the vote every round.
+      </Instructional>
       <div class="flex justify-between">
-        <button @click="passVote()" class="italic text-blue-600">Pass</button>
-        <button @click="recordVote(null)" class="italic text-gray-600">Clear your vote...</button>
+        <button @click="passVote()" class="italic text-blue-600 dark:text-blue-400">Pass</button>
+        <button @click="recordVote(null)" class="italic text-gray-600 dark:text-gray-400">Clear your vote...</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Instructional from './Instructional.vue'
 export default {
+  components: { Instructional },
   name: 'VoteRecorder',
   props: ['value', 'showPassInstructional'],
   methods: {

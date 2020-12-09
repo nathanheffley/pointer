@@ -2,7 +2,7 @@
   <div class="h-screen flex flex-col justify-center">
     <h1 class="flex justify-center items-center">
       <img src="/static/ellipsis.svg" class="mr-2 h-8" />
-      <span class="text-3xl text-black font-normal">404</span>
+      <span class="text-3xl font-normal text-black dark:text-gray-300">404</span>
     </h1>
 
     <router-link to="/" tag="button" class="mt-8 btn btn-blue self-center no-underline">start a new session</router-link>

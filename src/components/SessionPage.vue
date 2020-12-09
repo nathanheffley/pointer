@@ -1,9 +1,9 @@
 <template>
   <div>
-    <nav class="bg-blue-50 text-blue-800 py-6">
+    <nav class="py-6 bg-blue-50 text-blue-800 dark:bg-gray-900 dark:text-gray-300">
       <h1 class="text-3xl text-center font-normal">Pointing Poker</h1>
       <div class="flex justify-center items-center mt-2">
-        <span class="bg-transparent text-sm font-bold text-blue-500 opacity-75 cursor-pointer" @click="copyLink">{{ sessionUrl }}</span>
+        <span class="bg-transparent text-sm font-bold opacity-75 cursor-pointer text-blue-500 dark:text-blue-400" @click="copyLink">{{ sessionUrl }}</span>
         <img src="/static/clone.svg" class="ml-2 cursor-pointer opacity-60 h-4" @click="copyLink" alt="Copy" title="Copy" />
       </div>
     </nav>

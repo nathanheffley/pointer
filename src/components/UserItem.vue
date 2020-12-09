@@ -1,8 +1,8 @@
 <template>
   <li class="mt-2 flex items-center group">
     <img :src="icon" class="mr-2 h-8 w-8" :class="[ faded ? 'opacity-50' : '' ]" />
-    <input v-if="editingName" ref="nameInput" v-model="name" @keyup.enter="editingName = false" class="min-w-0 input-underline" />
-    <span v-else :class="[ user.pass && !faded ? 'text-gray-700' : '', faded ? 'text-gray-400' : '', 'text-overflow-ellipsis' ]" v-text="user.username"></span>
+    <input v-if="editingName" ref="nameInput" v-model="name" @keyup.enter="editingName = false" class="min-w-0 input-underline dark:bg-gray-800 dark:text-gray-300" />
+    <span v-else class="text-black dark:text-gray-300" :class="[faded ? 'text-gray-400 dark:text-gray-600' : 'text-gray-700 dark:text-gray-300', 'text-overflow-ellipsis']" v-text="user.username"></span>
 
     <button v-if="self" @click="editingName = !editingName" :class="[ editingName ? 'opacity-100' : 'opacity-0' ]" class="ml-2 flex-shrink-0 group-hover:opacity-100 focus:opacity-100">
       <img v-if="editingName" src="/static/save.svg" class="h-6 w-6" alt="Save Name" title="Save Name" />

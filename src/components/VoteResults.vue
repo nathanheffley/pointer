@@ -1,13 +1,13 @@
 <template>
   <div>
-    <span class="block uppercase font-light text-3xl">Results</span>
+    <span class="block uppercase font-light text-3xl dark:text-gray-300">Results</span>
     <ul v-if="$props.show && (voteResults.length > 0)" class="list-reset my-1">
       <li class="py-1 relative text-2xl" v-for="result in voteResults" :key="result.points" @mouseover="hovering = result.points" @mouseleave="hovering = null">
-        <span :class="[ result.highest ? 'bg-blue-500' : 'bg-gray-400', 'points' ]" v-text="result.points"></span>
-        <span class="ml-2 text-gray-700" v-text="result.votes + ' ' + pluralizedVote(result.votes)"></span>
+        <span :class="[ result.highest ? 'bg-blue-500 dark:bg-blue-600' : 'bg-gray-400 dark:bg-gray-500', 'points' ]" v-text="result.points"></span>
+        <span class="ml-2 text-gray-700 dark:text-gray-300" v-text="result.votes + ' ' + pluralizedVote(result.votes)"></span>
       </li>
     </ul>
-    <span v-else class="block mt-2 font-light text-xl">Waiting...</span>
+    <span v-else class="block mt-2 font-light text-xl dark:text-gray-300">Waiting...</span>
   </div>
 </template>
 
