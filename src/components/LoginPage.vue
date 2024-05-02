@@ -5,7 +5,7 @@
     </nav>
     <main>
       <form class="px-4 py-6 max-w-md mx-auto">
-        <div class="flex items-center mb-6">
+        <div class="flex items-center">
           <div class="w-1/4">
             <label for="name" class="block font-bold text-right pr-4 text-gray-500">Name</label>
           </div>
@@ -13,16 +13,16 @@
             <input class="login-input" id="name" type="text" required v-model="name" />
           </div>
         </div>
-        <div class="flex items-center mb-6">
+        <div class="flex items-center mt-6">
           <div class="w-1/4">
             <label for="room" class="block text-gray-500 font-bold text-right pr-4">Room</label>
           </div>
           <div class="w-3/4">
             <input class="login-input" id="room" type="text" required v-model="session" />
-            <p v-if="session && session.trim().length > 0 && !isValidSession" class="text-red-500 text-xs italic">Session name can only contain letters, numbers, and dashes.</p>
           </div>
         </div>
-        <div class="flex items-center">
+        <p v-if="session && session.trim().length > 0 && !isValidSession" class="mt-2 text-red-500 text-xs italic">Session name can only contain letters, numbers, and dashes.</p>
+        <div class="flex items-center mt-6">
           <div class="w-1/4"></div>
           <div class="w-3/4">
             <router-link v-if="isValidSession && isValidName" :to="{ name: 'SessionPage', params: { id: session.toLowerCase().trim(), name } }" tag="button" class="btn btn-blue no-underline">
