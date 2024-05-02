@@ -9,10 +9,10 @@
 
     <form class="mt-8 self-center flex">
       <input type="text" id="room" class="login-input w-48 rounded-r-none" v-model="id" placeholder="session-id">
-      <p v-if="id && id.trim().length > 0 && !isValidSession" class="text-red-500 text-xs italic">Session name can only contain letters, numbers, and dashes.</p>
       <router-link v-if="isValidSession" :to="{ name: 'SessionPage', params: { id: id.trim() } }" tag="button" class="btn btn-blue no-underline rounded-l-none">join</router-link>
       <button v-else class="btn btn-blue opacity-50 hover:bg-blue-500 cursor-not-allowed rounded-l-none" disabled>join</button>
     </form>
+    <p v-if="id && id.trim().length > 0 && !isValidSession" class="mt-2 text-red-500 text-xs text-center italic">Session name can only contain letters, numbers, and dashes.</p>
   </div>
 </template>
 
