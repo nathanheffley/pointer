@@ -21,11 +21,11 @@
             <input class="login-input" id="room" type="text" required v-model="session" />
           </div>
         </div>
-        <div class="flex items-center mt-6">
+        <div v-if="session && session.trim().length > 0 && !isValidSession" class="flex items-center mt-2">
           <div class="w-1/4">
           </div>
           <div class="w-3/4">
-            <p v-if="session && session.trim().length > 0 && !isValidSession" class="mt-2 text-red-500 text-xs italic">Session name can only contain letters, numbers, and dashes.</p>
+            <p class="text-red-500 text-xs italic">Session name can only contain letters, numbers, and dashes.</p>
           </div>
         </div>
         <div class="flex items-center mt-6">
