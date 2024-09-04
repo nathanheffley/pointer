@@ -21,6 +21,7 @@
           v-on:pass="passVote()"
           :show-pass-instructional="showPassInstructional"
           v-on:dismiss-pass-instructional="dismissPassInstructional"
+          :enabled="online"
         ></vote-recorder>
 
         <div class="sm:flex sm:justify-between">
@@ -32,8 +33,8 @@
           <div class="mt-6 text-gray-800">
             <vote-results :votes="votes" :show="showVotes" v-on:hovering="highlightVoters"></vote-results>
 
-            <conditional-button :enabled="(votes.filter(vote => vote !== null).length > 0) && !showVotes" @click="revealVotes">Reveal</conditional-button>
-            <conditional-button :enabled="votes.filter(vote => vote !== null).length > 0" @click="clearVotes">Clear</conditional-button>
+            <conditional-button :enabled="(votes.filter(vote => vote !== null).length > 0) && !showVotes && online" @click="revealVotes">Reveal</conditional-button>
+            <conditional-button :enabled="votes.filter(vote => vote !== null).length > 0 && online" @click="clearVotes">Clear</conditional-button>
           </div>
         </div>
       </div>
