@@ -32,8 +32,8 @@
           <div class="mt-6 text-gray-800">
             <vote-results :votes="votes" :show="showVotes" v-on:hovering="highlightVoters"></vote-results>
 
-            <conditional-button :enabled="(votes.filter(vote => vote !== null).length > 0) && !showVotes" @click="revealVotes">Reveal</conditional-button>
-            <conditional-button :enabled="votes.filter(vote => vote !== null).length > 0" @click="clearVotes">Clear</conditional-button>
+            <conditional-button :enabled="canReveal" @click="revealVotes">Reveal</conditional-button>
+            <conditional-button :enabled="canClear" @click="clearVotes">Clear</conditional-button>
           </div>
         </div>
       </div>
@@ -151,6 +151,12 @@ export default {
     },
     sessionUrl: function () {
       return `${process.env.VUE_APP_HOST}/s/${this.session}`
+    },
+    canReveal: function () {
+      return this.online && (this.votes.filter(vote => vote !== null).length > 0) && !this.showVotes
+    },
+    canClear: function () {
+      return this.online && this.votes.filter(vote => vote !== null).length > 0
     }
   },
 
